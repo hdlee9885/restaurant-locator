@@ -1,6 +1,24 @@
-import React from 'react'
+import React, { useEffect, useContext } from 'react'
+import RestaurantAPI from '../api/Restaurant'
+import { RestaurantsContext } from '../context/RestaurantsContext'
 
-function RestaurantList() {
+function RestaurantList(props) {
+    const { restaurants, setRestaurants } = useContext(RestaurantsContext);
+
+    useEffect(() => {
+        const getAllRestaurants = async () => {
+            try {
+                const response = await RestaurantAPI.get('/')
+                console.log(response.data.data.restaurants)
+                setRestaurants(response.data.data.restaurants)
+            } catch (err) {
+                console.log(err)
+            }
+        }
+        
+        getAllRestaurants();
+    }, [setRestaurants])
+
     return (
         <div className="list-group">
             <table className="table table-hover table-dark">
@@ -15,14 +33,16 @@ function RestaurantList() {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>McDonalds</td>
-                        <td>New York</td>
-                        <td>$</td>
-                        <td>Rating</td>
-                        <td><button className="btn btn-warning">Update</button></td>
-                        <td><button className="btn btn-danger">Delete</button></td>
-                    </tr>
+                    {restaurants && restaurants.map(restaurant => (
+                        <tr key={restaurant.id}>
+                            <td>{restaurant.name}</td>
+                            <td>{restaurant.location}</td>
+                            <td>{"$".repeat(restaurant.price_range)}</td>
+                            <td>Rating</td>
+                            <td><button className="btn btn-warning">Update</button></td>
+                            <td><button className="btn btn-danger">Delete</button></td>
+                        </tr>
+                    ))}
                 </tbody>
             </table>
         </div>
