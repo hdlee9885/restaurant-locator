@@ -5,12 +5,24 @@ import { RestaurantsContext } from '../context/RestaurantsContext'
 function RestaurantList(props) {
     const { restaurants, setRestaurants } = useContext(RestaurantsContext);
 
+    const deleteRestaurant = async (id) => {
+        try {
+            const response = await RestaurantAPI.delete(`/${id}`);
+            console.log(response)
+            setRestaurants(restaurants.filter(restaurant => {
+                return restaurant.id !== id;
+            }));
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
     useEffect(() => {
         const getAllRestaurants = async () => {
             try {
-                const response = await RestaurantAPI.get('/')
-                console.log(response.data.data.restaurants)
-                setRestaurants(response.data.data.restaurants)
+                const response = await RestaurantAPI.get('/');
+                console.log(response.data.data.restaurants);
+                setRestaurants(response.data.data.restaurants);
             } catch (err) {
                 console.log(err)
             }
@@ -40,7 +52,7 @@ function RestaurantList(props) {
                             <td>{"$".repeat(restaurant.price_range)}</td>
                             <td>Rating</td>
                             <td><button className="btn btn-warning">Update</button></td>
-                            <td><button className="btn btn-danger">Delete</button></td>
+                            <td><button onClick={() => deleteRestaurant(restaurant.id)} className="btn btn-danger">Delete</button></td>
                         </tr>
                     ))}
                 </tbody>

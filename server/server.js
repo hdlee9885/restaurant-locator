@@ -102,7 +102,7 @@ app.delete('/api/restaurants/:id', async (req, res) => {
             "DELETE FROM restaurants where id = $1",
             [req.params.id]
         );
-        res.status(201).json({
+        res.status(204).json({
             status: "success",
         })
     } catch (err) {
