@@ -14,7 +14,7 @@ function RestaurantDetailPage() {
         const getRestaurant = async () => {
             try {
                 const response = await RestaurantAPI.get(`${id}`);
-                setSelectedRestaurant(response.data.data.restaurant);
+                setSelectedRestaurant(response.data.data);
             } catch (err) {
                 console.log(err)
             }
@@ -26,11 +26,11 @@ function RestaurantDetailPage() {
 
     return (
         <div className="container">
-            <h2 className="text-center mt-4">
-                {selectedRestaurant && selectedRestaurant.name}
+            <h2 className="text-center mt-4 display-1">
+                {selectedRestaurant && selectedRestaurant.restaurant.name}
             </h2>
             <div className="mt-3">
-                <Reviews />
+                <Reviews reviews={selectedRestaurant.reviews}/>
                 <AddReview />
             </div>
         </div>
