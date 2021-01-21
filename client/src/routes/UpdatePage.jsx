@@ -1,5 +1,5 @@
 import React from 'react'
-import UpdateRestaurantPage from './UpdateRestaurantPage'
+import UpdateRestaurantPage from '../components/UpdateRestaurantPage'
 
 function UpdatePage() {
     return (
