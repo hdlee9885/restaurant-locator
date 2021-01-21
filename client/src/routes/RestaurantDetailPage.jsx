@@ -25,8 +25,10 @@ function RestaurantDetailPage() {
     }, [])
 
     return (
-        <div>
-            {selectedRestaurant && selectedRestaurant.name}
+        <div className="container">
+            <h2 className="text-center mt-4">
+                {selectedRestaurant && selectedRestaurant.name}
+            </h2>
             <div className="mt-3">
                 <Reviews />
                 <AddReview />

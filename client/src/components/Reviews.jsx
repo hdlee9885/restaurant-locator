@@ -3,9 +3,9 @@ import StarRating from './StarRating'
 
 function Reviews() {
     return (
-        <div className="row rows-cols-3 mb-2">
+        <div className="row rows-cols-3 mb-2 container">
              <div
-                className="card text-white bg-primary mb-3 mr-4"
+                className="card text-white bg-info mb-3 mr-4"
                 style={{ maxWidth: "30%" }}
             >
                 <div className="card-header d-flex justify-content-between">
