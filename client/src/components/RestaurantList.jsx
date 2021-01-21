@@ -1,9 +1,16 @@
 import React, { useEffect, useContext } from 'react'
 import RestaurantAPI from '../api/Restaurant'
 import { RestaurantsContext } from '../context/RestaurantsContext'
+import { useHistory } from 'react-router-dom'
 
 function RestaurantList(props) {
     const { restaurants, setRestaurants } = useContext(RestaurantsContext);
+
+    let history = useHistory();
+
+    const updateRestaurant = async (id) => {
+        history.push(`/restaurants/${id}/update`);
+    }
 
     const deleteRestaurant = async (id) => {
         try {
@@ -51,7 +58,7 @@ function RestaurantList(props) {
                             <td>{restaurant.location}</td>
                             <td>{"$".repeat(restaurant.price_range)}</td>
                             <td>Rating</td>
-                            <td><button className="btn btn-warning">Update</button></td>
+                            <td><button onClick={() => updateRestaurant(restaurant.id)} className="btn btn-warning">Update</button></td>
                             <td><button onClick={() => deleteRestaurant(restaurant.id)} className="btn btn-danger">Delete</button></td>
                         </tr>
                     ))}
