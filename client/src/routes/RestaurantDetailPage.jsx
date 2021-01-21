@@ -4,6 +4,7 @@ import { RestaurantsContext } from '../context/RestaurantsContext';
 import RestaurantAPI from '../api/Restaurant'
 import StarRating from '../components/StarRating';
 import Reviews from '../components/Reviews';
+import AddReview from '../components/AddReview';
 
 function RestaurantDetailPage() {
     const { id } = useParams();
@@ -28,6 +29,7 @@ function RestaurantDetailPage() {
             {selectedRestaurant && selectedRestaurant.name}
             <div className="mt-3">
                 <Reviews />
+                <AddReview />
             </div>
         </div>
     )
