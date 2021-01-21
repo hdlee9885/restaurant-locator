@@ -8,11 +8,17 @@ function RestaurantList(props) {
 
     let history = useHistory();
 
-    const updateRestaurant = async (id) => {
+    const selectRestaurant = (id) => {
+        history.push(`/restaurants/${id}`);
+    } 
+
+    const updateRestaurant = async (e, id) => {
+        e.stopPropagation();
         history.push(`/restaurants/${id}/update`);
     }
 
-    const deleteRestaurant = async (id) => {
+    const deleteRestaurant = async (e, id) => {
+        e.stopPropagation();
         try {
             const response = await RestaurantAPI.delete(`/${id}`);
             console.log(response)
@@ -53,13 +59,13 @@ function RestaurantList(props) {
                 </thead>
                 <tbody>
                     {restaurants && restaurants.map(restaurant => (
-                        <tr key={restaurant.id}>
+                        <tr onClick={() => selectRestaurant(restaurant.id)} key={restaurant.id}>
                             <td>{restaurant.name}</td>
                             <td>{restaurant.location}</td>
                             <td>{"$".repeat(restaurant.price_range)}</td>
                             <td>Rating</td>
-                            <td><button onClick={() => updateRestaurant(restaurant.id)} className="btn btn-warning">Update</button></td>
-                            <td><button onClick={() => deleteRestaurant(restaurant.id)} className="btn btn-danger">Delete</button></td>
+                            <td><button onClick={(e) => updateRestaurant(e, restaurant.id)} className="btn btn-warning">Update</button></td>
+                            <td><button onClick={(e) => deleteRestaurant(e, restaurant.id)} className="btn btn-danger">Delete</button></td>
                         </tr>
                     ))}
                 </tbody>

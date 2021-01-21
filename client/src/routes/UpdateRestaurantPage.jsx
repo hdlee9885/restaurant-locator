@@ -23,14 +23,15 @@ function UpdateRestaurantPage(props) {
         getRestaurant();
     }, [])
 
-    const updateRestaurant = async (e) => {
+    const submitUpdateRestaurant = async (e) => {
         e.preventDefault();
-        const response = await RestaurantAPI.put(`/${id}`, {
-                name: name,
-                location: location,
-                price_range: price_range,
+        const updatedRestaurant = await RestaurantAPI.put(`/${id}`, {
+            name: name,
+            location: location,
+            price_range: price_range,
         });
-        history.push('/')
+        console.log(updatedRestaurant)
+        history.push('/');
     }
 
     return (
@@ -69,7 +70,12 @@ function UpdateRestaurantPage(props) {
                     />
                 </div>
 
-                <button onClick={() => updateRestaurant(id)} className="btn btn-primary">Submit</button>
+                <button 
+                    type="submit" 
+                    onClick={submitUpdateRestaurant} 
+                    className="btn btn-primary">
+                        Submit
+                </button>
             </form>
         </div>
     )
