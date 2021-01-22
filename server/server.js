@@ -20,7 +20,7 @@ app.use(express.json());
 app.get('/api/restaurants', async (req, res) => {
     try {
         const results = await db.query("select * from restaurants");
-        console.log(results);
+        // console.log(results);
         res.json({
             status: "success",
             results: results.rows.length,
@@ -37,19 +37,21 @@ app.get('/api/restaurants', async (req, res) => {
 
 // get a specific restaurant
 app.get('/api/restaurants/:id', async (req, res) => {
+    console.log(req)
     try {
-        const id = req.params.id;
         // parametrized query to prevent sql injection attacks
         const restaurant = await db.query(
             "select * from restaurants where id = $1",
-            [id]
+            [req.params.id]
         );
 
         const reviews = await db.query(
             "select * from reviews where restaurant_id = $1",
-            [id]
+            [req.params.id]
         );
-        res.json({
+        console.log(reviews);
+    
+        res.status(200).json({
             status: "success",
             data: {
                 restaurant: restaurant.rows[0],
@@ -57,13 +59,13 @@ app.get('/api/restaurants/:id', async (req, res) => {
             },
         });
     } catch (err) {
-        res.status(400).send(err);
+        console.log(err);
     }
 })
 
 // create a restaurant
 app.post('/api/restaurants', async (req, res) => {
-    console.log(req.body);
+    // console.log(req.body);
     try {
         const results = await db.query(
             "INSERT INTO restaurants (name, location, price_range) values ($1, $2, $3) returning *",
@@ -82,7 +84,7 @@ app.post('/api/restaurants', async (req, res) => {
 
 // update a restaurant
 app.put('/api/restaurants/:id', async (req, res) => {
-    console.log(req.params.id);
+    // console.log(req.params.id);
     try {
         const results = await db.query(
             "UPDATE restaurants SET name = $1, location = $2, price_range = $3 where id = $4 returning *",
@@ -101,7 +103,7 @@ app.put('/api/restaurants/:id', async (req, res) => {
 
 // delete a restaurant
 app.delete('/api/restaurants/:id', async (req, res) => {
-    console.log(req);
+    // console.log(req);
     try {
         const results = await db.query(
             "DELETE FROM restaurants where id = $1",
